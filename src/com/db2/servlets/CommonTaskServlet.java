@@ -5,43 +5,20 @@ import com.db2.templates.CommonGenerator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class CommonTaskServlet extends HttpServlet {
     protected CommonGenerator pageGenerator = CommonGenerator.instance();
-    // common for: MainServlet, AddTaskServlet
     // migrated: private EntityProvider provider;
-    private static final EntityProvider provider = new JdbcTaskProvider(); // keep one connection
+    protected static final EntityProvider provider = new JdbcTaskProvider(); // keep one connection
     protected Map<String, Object> variables = new HashMap<>();;
 
-    public void edit(HttpServletRequest request) {
-        TaskEntity item = map(request);
-        //provider.editRecord(item);
-    }
-
-    public void loadAllTasks() {
-        //ArrayList<TaskEntity> items = provider.getRecords();
-        List<TaskEntity> items = provider.getRecords();
-        variables.put("tasks", items);
-    }
-
-    public void loadById(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        TaskEntity item = (TaskEntity) provider.getRecord(id);
-        variables.put("task", item);
-    }
-
-    public void loadAll(HttpServletRequest request) {
-        loadAllTasks();
-        loadRequestVariables(request);
-    }
-
-    private TaskEntity map(HttpServletRequest request) {
+    // Map<String, String[]> getParameterMap()
+    // todo: move to Entity
+    protected TaskEntity map(HttpServletRequest request) {
         TaskEntity result = new TaskEntity();
         // note: "id" auto
         result.setName(request.getParameter("name"));
@@ -53,19 +30,13 @@ public abstract class CommonTaskServlet extends HttpServlet {
         return result;
     }
 
-    // transform to entity
-    public void add(HttpServletRequest request) {
-        TaskEntity item = map(request);
-
-        provider.addRecord(item);
-    }
-
-    private void loadRequestVariables(HttpServletRequest request) {
+    protected void loadRequestVariables(HttpServletRequest request) {
         //Map<String, Object> pageVariables = new HashMap<>();
         variables.put("method", request.getMethod());
         variables.put("URL", request.getRequestURL().toString());
         variables.put("pathInfo", request.getPathInfo());
         variables.put("sessionId", request.getSession().getId());
+        // Map<String, String[]>
         variables.put("parameters", request.getParameterMap().toString());
     }
 }

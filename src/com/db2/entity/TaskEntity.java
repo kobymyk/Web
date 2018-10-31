@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class TaskEntity {
@@ -56,19 +58,28 @@ public class TaskEntity {
 
     public TaskEntity() {
     }
+    // map: http support
+    public TaskEntity(HashMap<String, String> map) {
+        this.id = Integer.parseInt(map.get("id"));
+        this.name = map.get("name");
+        //LocalDate.parse(request.getParameter("dueDate"))
+        this.dueDate = LocalDate.parse(map.get("dueDate"));
+        this.priority = Integer.parseInt(map.get("priority"));
+    }
 
     // map: db support
     public static TaskEntity fromCursor(ResultSet cursor) throws SQLException {
-        TaskEntity record = new TaskEntity();
+        TaskEntity newTask = new TaskEntity();
         // mapping
-        record.setId(cursor.getInt("id"));
-        record.setName(cursor.getString("name"));
-        record.setPriority(cursor.getInt("priority"));
+        newTask.id = cursor.getInt("id");
+        newTask.name = cursor.getString("name");
+        newTask.priority = cursor.getInt("priority");
         // hard dependency: to_char(due_date, 'yyyy-MM-dd') as due_date
         String dueDateTimestamp = cursor.getString("due_date");
-        record.setDueDate(LocalDate.parse(dueDateTimestamp, JdbcUtils.DATE_TIME_FORMATTER));
+        newTask.setDueDate(LocalDate.parse(dueDateTimestamp, JdbcUtils.DATE_TIME_FORMATTER));
+        // sqlDate.toLocalDate();
 
-        return record;
+        return newTask;
     }
 
     public void setStatement(PreparedStatement statement) throws SQLException {

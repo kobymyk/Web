@@ -43,7 +43,7 @@ public class JdbcTaskProvider implements EntityProvider {
             // not able to obtain cursor size before fetch
             List<TaskEntity> records = new ArrayList<>();
             while (cursor.next()) {
-                // mapping
+                // mapping current row
                 TaskEntity record = TaskEntity.fromCursor(cursor);
                 records.add(record);
             }

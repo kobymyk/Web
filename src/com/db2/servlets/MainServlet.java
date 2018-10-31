@@ -1,11 +1,13 @@
 package com.db2.servlets;
 
+import com.db2.entity.TaskEntity;
 import com.db2.templates.CommonGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class MainServlet extends CommonTaskServlet {
     private static final String FILE_NAME = "main.html";
@@ -14,7 +16,9 @@ public class MainServlet extends CommonTaskServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
         // load request params and data
-        loadAll(request);
+        loadRequestVariables(request);
+        List<TaskEntity> items = provider.getRecords();
+        variables.put("tasks", items);
         // for debug
         String page = pageGenerator.makePage(FILE_NAME, variables);
         response.getWriter().write(page);
