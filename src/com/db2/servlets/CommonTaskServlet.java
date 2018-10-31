@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,8 +30,15 @@ public abstract class CommonTaskServlet extends HttpServlet {
     }
 
     public void loadAllTasks() {
-        ArrayList<TaskEntity> items = provider.getRecords();
+        //ArrayList<TaskEntity> items = provider.getRecords();
+        List<TaskEntity> items = provider.getRecords();
         variables.put("tasks", items);
+    }
+
+    public void loadById(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        TaskEntity item = (TaskEntity) provider.getRecord(id);
+        variables.put("task", item);
     }
 
     public void loadAll(HttpServletRequest request) {

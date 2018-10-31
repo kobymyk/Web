@@ -8,5 +8,7 @@ public interface EntityProvider<R> {
     //ArrayList<R> getRecords();
     List<R> getRecords();
 
+    R getRecord(int id);
+
     int size();
 }

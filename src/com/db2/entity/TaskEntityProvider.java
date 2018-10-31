@@ -11,9 +11,16 @@ public class TaskEntityProvider implements EntityProvider {
     public TaskEntityProvider() {
         records = getDefaultRecords();
     }
+
     @Override
     public ArrayList<TaskEntity> getRecords() {
         return records;
+    }
+
+    @Override
+    public TaskEntity getRecord(int id) {
+        // get by index should be changed
+        return records.get(id);
     }
 
     @Override

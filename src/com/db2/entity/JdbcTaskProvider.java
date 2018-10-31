@@ -50,6 +50,11 @@ public class JdbcTaskProvider implements EntityProvider {
     }
 
     @Override
+    public Object getRecord(int id) {
+        return null;
+    }
+
+    @Override
     public int size() {
         return 0;
     }

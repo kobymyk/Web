@@ -29,7 +29,11 @@ public class JettyServer {
         AddTaskServlet addTaskServlet = new AddTaskServlet();
         addTaskServlet.setProvider(mockProvider);
         context.addServlet(new ServletHolder(addTaskServlet), "/main/add-task");
-
+        // etit-task.html
+        EditTaskServlet editTaskServlet = new EditTaskServlet();
+        editTaskServlet.setProvider(mockProvider);
+        context.addServlet(new ServletHolder(editTaskServlet), "/main/edit-task");
+        //
         Server server = new Server(port);
         server.setHandler(context);
 
