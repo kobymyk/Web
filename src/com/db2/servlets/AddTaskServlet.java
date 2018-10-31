@@ -11,6 +11,7 @@ public class AddTaskServlet extends CommonTaskServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // nothing to load
+        // todo: put appName
         String page = pageGenerator.makePage(FILE_NAME, null);
         resp.getWriter().write(page);
     }

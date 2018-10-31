@@ -20,7 +20,17 @@ public class JdbcTaskProvider implements EntityProvider {
 
     @Override
     public boolean addRecord(Object record) {
-        return false;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(JdbcUtils.DML_INSERT);) {
+
+            ((TaskEntity) record).setStatement(statement);
+            statement.executeUpdate();
+
+            return true; //
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

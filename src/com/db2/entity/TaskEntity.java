@@ -1,8 +1,11 @@
 package com.db2.entity;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
+
 
 public class TaskEntity {
     private int id;
@@ -61,9 +64,16 @@ public class TaskEntity {
         record.setId(cursor.getInt("id"));
         record.setName(cursor.getString("name"));
         record.setPriority(cursor.getInt("priority"));
-        String dueDateTimestamp = cursor.getString("dueDate");
+        // hard dependency: to_char(due_date, 'yyyy-MM-dd') as due_date
+        String dueDateTimestamp = cursor.getString("due_date");
         record.setDueDate(LocalDate.parse(dueDateTimestamp, JdbcUtils.DATE_TIME_FORMATTER));
 
         return record;
+    }
+
+    public void setStatement(PreparedStatement statement) throws SQLException {
+        statement.setString(1, this.name);
+        statement.setDate(2, java.sql.Date.valueOf(this.dueDate));
+        statement.setInt(3, this.priority);
     }
 }
