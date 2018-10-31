@@ -20,18 +20,19 @@ public class JettyServer {
     static void run(int port) throws Exception {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         // should be one, mock on create
-        TaskEntityProvider mockProvider = new TaskEntityProvider();
+        //TaskEntityProvider mockProvider = new TaskEntityProvider();
         // main.html
         MainServlet mainServlet = new MainServlet();
-        mainServlet.setProvider(mockProvider);
+        //mainServlet.setProvider(mockProvider);
+        //mainServlet.setProvider(mockProvider);
         context.addServlet(new ServletHolder(mainServlet), "/main");
         // add-task.html
         AddTaskServlet addTaskServlet = new AddTaskServlet();
-        addTaskServlet.setProvider(mockProvider);
+        //addTaskServlet.setProvider(mockProvider);
         context.addServlet(new ServletHolder(addTaskServlet), "/main/add-task");
         // etit-task.html
         EditTaskServlet editTaskServlet = new EditTaskServlet();
-        editTaskServlet.setProvider(mockProvider);
+        //editTaskServlet.setProvider(mockProvider);
         context.addServlet(new ServletHolder(editTaskServlet), "/main/edit-task");
         //
         Server server = new Server(port);

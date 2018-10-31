@@ -1,5 +1,7 @@
 package com.db2.entity;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class TaskEntity {
@@ -7,6 +9,8 @@ public class TaskEntity {
     private String name;
     private LocalDate dueDate;
     private int priority;
+    // utils
+    //private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public void setId(int id) {
         this.id = id;
@@ -50,13 +54,16 @@ public class TaskEntity {
     public TaskEntity() {
     }
 
-    @Override
-    public String toString() {
-        return "TaskEntity{" +
-                "id=" + id +
-                ", name=" + name +
-                ", dueDate=" + dueDate +
-                ", priority=" + priority +
-                '}';
+    // map: db support
+    public static TaskEntity fromCursor(ResultSet cursor) throws SQLException {
+        TaskEntity record = new TaskEntity();
+        // mapping
+        record.setId(cursor.getInt("id"));
+        record.setName(cursor.getString("name"));
+        record.setPriority(cursor.getInt("priority"));
+        String dueDateTimestamp = cursor.getString("dueDate");
+        record.setDueDate(LocalDate.parse(dueDateTimestamp, JdbcUtils.DATE_TIME_FORMATTER));
+
+        return record;
     }
 }

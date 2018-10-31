@@ -3,7 +3,7 @@ package com.db2.entity;
 import java.time.LocalDate;
 import java.util.*;
 
-// mock data
+// mock DAO
 public class TaskEntityProvider implements EntityProvider {
     // todo: singleton TaskEntityProvider instance;
     // records

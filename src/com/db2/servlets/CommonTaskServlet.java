@@ -15,12 +15,9 @@ import java.util.Map;
 public abstract class CommonTaskServlet extends HttpServlet {
     protected CommonGenerator pageGenerator = CommonGenerator.instance();
     // common for: MainServlet, AddTaskServlet
-    private EntityProvider provider;
+    // migrated: private EntityProvider provider;
+    private static final EntityProvider provider = new JdbcTaskProvider(); // keep one connection
     protected Map<String, Object> variables = new HashMap<>();;
-
-    public void setProvider(EntityProvider provider) {
-        this.provider = provider;
-    }
 
     public void edit(HttpServletRequest request) {
         TaskEntity item = map(request);
