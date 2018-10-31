@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-// todo=rename: TaskEntity(<E>) = Task
-// Loks like force child
 public abstract class CommonTaskServlet extends HttpServlet {
     protected CommonGenerator pageGenerator = CommonGenerator.instance();
     // common for: MainServlet, AddTaskServlet

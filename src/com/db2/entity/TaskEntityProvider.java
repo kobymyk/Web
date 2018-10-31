@@ -5,6 +5,7 @@ import java.util.*;
 
 // mock data
 public class TaskEntityProvider implements EntityProvider {
+    // todo: singleton TaskEntityProvider instance;
     // records
     private ArrayList<TaskEntity> records;
 

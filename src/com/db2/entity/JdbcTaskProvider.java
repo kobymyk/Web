@@ -28,21 +28,20 @@ public class JdbcTaskProvider implements EntityProvider {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(SELECT_ALL_SQL);) {
 
-            List<TaskEntity> todos = new ArrayList<>();
+            List<TaskEntity> records = new ArrayList<>();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                int priority = resultSet.getInt("priority");
+                TaskEntity record = new TaskEntity();
+
+                record.setId(resultSet.getInt("id"));
+                record.setName(resultSet.getString("name"));
+                record.setPriority(resultSet.getInt("priority"));
                 String dueDateTimestamp = resultSet.getString("dueDate");
-                LocalDate dueDate = LocalDate.parse(dueDateTimestamp, DATE_TIME_FORMATTER);
+                record.setDueDate(LocalDate.parse(dueDateTimestamp, DATE_TIME_FORMATTER));
 
-
-                TaskEntity todo = new TaskEntity(id, name, dueDate, priority);
-                todos.add(todo);
-
+                records.add(record);
             }
-            return todos;
+            return records;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
