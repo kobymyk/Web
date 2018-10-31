@@ -4,8 +4,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 // mock data
-// Task data provider
-public class TaskEntityProvider implements EntityProvider { // TaskProvider
+public class TaskEntityProvider implements EntityProvider {
     // records
     private ArrayList<TaskEntity> records;
 
