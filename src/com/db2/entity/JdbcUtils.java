@@ -12,7 +12,7 @@ public final class JdbcUtils {
     // ANSI
     public static final String SQL_SELECT_ALL = "SELECT id, name, to_char(due_date, 'yyyy-MM-dd') as due_date, priority FROM todo_list t";
     public static final String SQL_SELECT_ROW = "SELECT id, name, dueDate, priority FROM todo_list WHERE ...;";
-    public static final String DML_INSERT = "INSERT INTO todo_list (id, name, due_date, priority) select HIBERNATE_SEQUENCE.nextval, ?, ?, ? FROM dual";
+    public static final String DML_INSERT = "INSERT INTO todo_list (id, name, due_date, priority) VALUES (HIBERNATE_SEQUENCE.nextval, ?, ?, ?)";
     public static final String DML_UPDATE = "UPDATE todo_list SET ... WHERE id = ?";
     // ORA ! null = ''
     public static final String PL_PIPE_ALL = "";
